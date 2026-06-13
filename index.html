@@ -480,26 +480,22 @@ footer .acc{color:var(--accent)}
       </div>
     </div>
 
-    <div class="form-card reveal">
+    <form class="form-card reveal" action="https://formspree.io/f/xdavpdqo" method="POST">
       <div class="fg">
         <label for="fname">Your Name</label>
-        <input type="text" id="fname" placeholder="e.g. John Doe"/>
+        <input type="text" id="fname" name="name" placeholder="e.g. John Doe" required/>
       </div>
       <div class="fg">
         <label for="femail">Email Address</label>
-        <input type="email" id="femail" placeholder="you@example.com"/>
+        <input type="email" id="femail" name="email" placeholder="you@example.com" required/>
       </div>
       <div class="fg">
         <label for="fsubject">Subject</label>
-        <input type="text" id="fsubject" placeholder="What's this about?"/>
+        <input type="text" id="fsubject" name="subject" placeholder="What's this about?"/>
       </div>
       <div class="fg">
         <label for="fmsg">Message</label>
-        <textarea id="fmsg" placeholder="Your message here..."></textarea>
-      </div>
-      <button class="sub-btn" onclick="sendMsg()">&#9658; Send Message</button>
-      <div id="fstatus"></div>
-    </div>
+        <textarea id="fmsg" name="message" placeholder="Your message here..." required></textarea>
   </div>
 </section>
 
