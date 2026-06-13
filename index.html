@@ -480,7 +480,7 @@ footer .acc{color:var(--accent)}
       </div>
     </div>
 
-    <form class="form-card reveal" action="https://formspree.io/f/xdavpdqo" method="POST">
+   <form class="form-card reveal" id="my-form" action="https://formspree.io/f/xdavpdqo" method="POST">
       <div class="fg">
         <label for="fname">Your Name</label>
         <input type="text" id="fname" name="name" placeholder="e.g. John Doe" required/>
@@ -496,7 +496,54 @@ footer .acc{color:var(--accent)}
       <div class="fg">
         <label for="fmsg">Message</label>
         <textarea id="fmsg" name="message" placeholder="Your message here..." required></textarea>
-  </div>
+      </div>
+      
+      <button type="submit" id="my-form-button" class="sub-btn" style="margin-top: 20px; display: block; cursor: pointer;">&#9658; Send Message</button>
+      
+      <div id="my-form-status" style="margin-top: 15px; font-weight: bold; color: #2ecc71; display: none;"></div>
+    </form>
+
+    <script>
+      var form = document.getElementById("my-form");
+      var statusMessage = document.getElementById("my-form-status");
+      var submitButton = document.getElementById("my-form-button");
+
+      async function handleSubmit(event) {
+        event.preventDefault();
+        submitButton.innerText = "Sending...";
+        var data = new FormData(event.target);
+        
+        fetch(event.target.action, {
+          method: form.method,
+          body: data,
+          headers: {
+              'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            statusMessage.style.display = "block";
+            statusMessage.innerText = "Thank you for your message, wait for the response.";
+            form.reset();
+            submitButton.innerText = "► Send Message"; 
+          } else {
+            response.json().then(data => {
+              statusMessage.style.display = "block";
+              statusMessage.style.color = "#e74c3c"; 
+              if (Object.prototype.hasOwnProperty.call(data, 'errors')) {
+                statusMessage.innerText = data["errors"].map(error => error["message"]).join(", ");
+              } else {
+                statusMessage.innerText = "Oops! There was a problem submitting your form";
+              }
+            })
+          }
+        }).catch(error => {
+          statusMessage.style.display = "block";
+          statusMessage.style.color = "#e74c3c";
+          statusMessage.innerText = "Oops! There was a problem submitting your form";
+        });
+      }
+      form.addEventListener("submit", handleSubmit);
+    </script>
 </section>
 
 <footer>
